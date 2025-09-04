@@ -27,15 +27,6 @@ public:
         }
     }
 
-    int top() {
-        long long t = st.top();
-        if (t < minElement) return minElement;
-        return (int)t;
-    }
-
-    int getMin() {
-        return (int)minElement;
-    }
 };
 
 int main() {
