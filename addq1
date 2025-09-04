@@ -1,0 +1,53 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+bool canBeStackSorted(int A[], int N) {
+    int sortedA[100];
+    for (int i = 0; i < N; i++) {
+        sortedA[i] = A[i];
+    }
+
+    for (int i = 0; i < N - 1; i++) {
+        for (int j = 0; j < N - i - 1; j++) {
+            if (sortedA[j] > sortedA[j + 1]) {
+                int temp = sortedA[j];
+                sortedA[j] = sortedA[j + 1];
+                sortedA[j + 1] = temp;
+            }
+        }
+    }
+
+    stack<int> S;
+    int B[100], Bsize = 0;
+    int nextIndex = 0;
+
+    for (int i = 0; i < N; i++) {
+        S.push(A[i]);
+
+        while (!S.empty() && S.top() == sortedA[nextIndex]) {
+            B[Bsize] = S.top();
+            Bsize = Bsize + 1;
+            S.pop();
+            nextIndex = nextIndex + 1;
+        }
+    }
+
+    if (Bsize != N) return false;
+    for (int i = 0; i < N; i++) {
+        if (B[i] != sortedA[i]) return false;
+    }
+    return true;
+}
+
+int main() {
+    int A[] = {3, 1, 2};
+    int N = 3;
+
+    if (canBeStackSorted(A, N)) {
+        cout << "Yes, can be stack sorted\n";
+    } else {
+        cout << "No, cannot be stack sorted\n";
+    }
+    return 0;
+}
